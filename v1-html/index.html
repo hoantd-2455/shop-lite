@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopLite | Sản Phẩm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="/">ShopLite</a>
+
+        <form class="search-form">
+          <label class="sr-only" for="search">Tìm kiếm sản phẩm</label>
+          <input
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Tìm kiếm sản phẩm..."
+          />
+          <button type="submit">Tìm kiếm</button>
+        </form>
+
+        <a class="cart-link" href="#"
+          >Giỏ hàng<span class="cart-badge">0</span></a
+        >
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="product-section" aria-labelledby="products-heading">
+        <h1 id="products-heading">Sản phẩm</h1>
+        <p>Khám phá các sản phẩm mới nhất tại ShopLite.</p>
+
+        <div class="product-list">
+          <article class="product-card">
+            <img
+              src="https://placehold.co/600x400?text=Product+1"
+              alt="Ảnh minh họa sản phẩm 1"
+            />
+            <h2>Sản phẩm mẫu 1</h2>
+            <p>1.200.000 ₫</p>
+            <button type="button">Thêm vào giỏ</button>
+          </article>
+
+          <article class="product-card">
+            <img
+              src="https://placehold.co/600x400?text=Product+2"
+              alt="Ảnh minh họa sản phẩm 2"
+            />
+            <h2>Sản phẩm mẫu 2</h2>
+            <p>850.000 ₫</p>
+            <button type="button">Thêm vào giỏ</button>
+          </article>
+
+          <article class="product-card">
+            <img
+              src="https://placehold.co/600x400?text=Product+3"
+              alt="Ảnh minh họa sản phẩm 3"
+            />
+            <h2>Sản phẩm mẫu 3</h2>
+            <p>2.500.000 ₫</p>
+            <button type="button">Thêm vào giỏ</button>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 ShopLite</p>
+
+        <nav aria-label="Liên kết cuối trang">
+          <a href="#">Giới thiệu</a>
+          <a href="#">Liên hệ</a>
+          <a href="#">Chính sách đổi trả</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
