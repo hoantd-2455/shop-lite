@@ -1,22 +1,58 @@
-Ngày 2 Flexbox & Grid
+# Ngày 2: Flexbox & Grid
 
-📖 Lý thuyết cơ bản
+## Lý thuyết cơ bản
 
-Đây là ngày quan trọng nhất của module. Hai hệ thống layout hiện đại:
+Đây là ngày quan trọng nhất của module, tập trung vào hai hệ thống layout hiện đại.
 
-Flexbox — layout 1 chiều (một hàng hoặc một cột). Đặt display: flex lên phần tử cha (flex container), các con thành flex item. Trục chính (main axis) điều khiển bằng flex-direction; căn chỉnh dọc main axis bằng justify-content, dọc trục phụ bằng align-items. flex: 1 cho item co giãn lấp đầy. Dùng cho: navbar, hàng nút, căn giữa một box.
+### Flexbox
 
-Grid — layout 2 chiều (hàng và cột cùng lúc). display: grid + grid-template-columns. Mẹo vàng cho responsive không cần media query: grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) — tự động xếp số cột vừa với độ rộng. Dùng cho: lưới sản phẩm, gallery, layout trang.
+Flexbox là layout một chiều: một hàng hoặc một cột. Đặt `display: flex` lên phần tử cha (flex container), các phần tử con trực tiếp trở thành flex item.
 
-Khi nào dùng cái nào? Một chiều (theo hàng/cột) → Flexbox. Lưới đều theo cả 2 chiều → Grid. Thực tế thường lồng nhau: Grid cho bố cục lớn, Flex cho từng ô bên trong.
+- Trục chính (main axis) được điều khiển bởi `flex-direction`.
+- Căn chỉnh trên trục chính bằng `justify-content`.
+- Căn chỉnh trên trục phụ bằng `align-items`.
+- `flex: 1` cho phép item co giãn để lấp đầy không gian còn lại.
 
-🛒 Đóng góp vào ShopLite
-Biến vùng sản phẩm rỗng ở ngày 1 thành lưới sản phẩm thật: dùng Grid với repeat(auto-fill, minmax(220px, 1fr)) cho khu vực sản phẩm, gap đều giữa các card.
-Hoàn thiện product card (vẫn dữ liệu tĩnh): mỗi card là một article dùng Flex theo chiều dọc — ảnh trên, tên sản phẩm, giá, nút "Thêm vào giỏ" dưới cùng; dùng margin-top: auto để đẩy nút xuống đáy cho các card cao bằng nhau.
-Tạo trang chi tiết sản phẩm (product.html): layout 2 cột bằng Grid — ảnh lớn bên trái, khối thông tin (tên, giá, mô tả, nút thêm giỏ) bên phải; trên mobile tự xếp thành 1 cột.
+Dùng Flexbox cho navbar, hàng nút hoặc căn giữa một box.
 
-✅ Tiêu chí hoàn thành
-Lưới sản phẩm tự xuống dòng và đổi số cột theo độ rộng màn hình mà không dùng một media query nào.
-Các product card cao bằng nhau, nút "Thêm vào giỏ" thẳng hàng ở đáy mọi card.
-Navbar không vỡ ở cả màn hẹp lẫn rộng; trang chi tiết 2 cột trên desktop, 1 cột trên mobile.
-Bạn nói được khi nào nên dùng Flex, khi nào nên dùng Grid cho từng khối trong trang.
+### Grid
+
+Grid là layout hai chiều, quản lý hàng và cột cùng lúc. Dùng `display: grid` kết hợp với `grid-template-columns`.
+
+Mẹo responsive không cần media query:
+
+```css
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+```
+
+Trình duyệt tự tính số cột vừa với độ rộng hiện tại. Dùng Grid cho lưới sản phẩm, gallery và layout trang.
+
+### Khi nào dùng Flexbox, khi nào dùng Grid?
+
+| Nhu cầu | Công cụ |
+| --- | --- |
+| Layout một chiều theo hàng hoặc cột | Flexbox |
+| Lưới đều theo hàng và cột | Grid |
+| Một product card nằm trong lưới | Grid bên ngoài, Flexbox bên trong |
+
+Trong thực tế, hai công cụ thường được lồng vào nhau: Grid cho bố cục lớn, Flexbox cho từng ô bên trong.
+
+## Đóng góp vào ShopLite
+
+1. Biến vùng sản phẩm ngày 1 thành lưới thật bằng Grid:
+
+   ```css
+   repeat(auto-fill, minmax(220px, 1fr))
+   ```
+
+   Thêm `gap` đều giữa các card.
+
+2. Hoàn thiện product card với dữ liệu tĩnh. Mỗi card là một `article` dùng Flexbox theo cột: ảnh, tên, giá và nút **Thêm vào giỏ**. Dùng `margin-top: auto` để đẩy nút xuống đáy, giữ các card cao bằng nhau.
+3. Tạo `product.html`: desktop có layout Grid hai cột với ảnh lớn bên trái và thông tin bên phải; trên mobile tự xếp thành một cột.
+
+## Tiêu chí hoàn thành
+
+- Lưới sản phẩm tự xuống dòng và đổi số cột theo độ rộng màn hình mà không dùng media query.
+- Các product card cao bằng nhau; nút **Thêm vào giỏ** thẳng hàng ở đáy mọi card.
+- Navbar không vỡ ở màn hẹp lẫn rộng; trang chi tiết có hai cột trên desktop và một cột trên mobile.
+- Giải thích được khi nào nên dùng Flexbox và khi nào dùng Grid cho từng khối trong trang.
