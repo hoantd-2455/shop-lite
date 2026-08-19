@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopLite | Giỏ hàng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index.html">ShopLite</a>
+
+        <form class="search-form">
+          <label class="sr-only" for="search">Tìm kiếm sản phẩm</label>
+          <input
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Tìm kiếm sản phẩm..."
+          />
+          <button type="submit">Tìm kiếm</button>
+        </form>
+
+        <a class="cart-link" href="cart.html"
+          >Giỏ hàng <span class="cart-badge">0</span></a
+        >
+      </div>
+    </header>
+
+    <main class="container cart-page">
+      <h1>Giỏ hàng</h1>
+
+      <div class="cart-layout">
+        <section class="cart-list" aria-labelledby="cart-items-heading">
+          <h2 id="cart-items-heading" class="sr-only">
+            Sản phẩm trong giỏ hàng
+          </h2>
+
+          <article class="cart-item">
+            <img
+              src="https://placehold.co/240x160?text=AirSound"
+              alt="Tai nghe không dây AirSound"
+            />
+
+            <div class="cart-item-content">
+              <div>
+                <h2>Tai nghe không dây AirSound</h2>
+                <p class="cart-item-price">1.200.000 ₫</p>
+              </div>
+
+              <div class="cart-item-actions">
+                <label class="quantity-field" for="quantity-1">
+                  <span>Số lượng</span>
+                  <input id="quantity-1" type="number" min="1" value="1" />
+                </label>
+
+                <button class="remove-button" type="button">Xóa</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="cart-item">
+            <img
+              src="https://placehold.co/240x160?text=Travel+Mug"
+              alt="Bình giữ nhiệt Travel Mug"
+            />
+
+            <div class="cart-item-content">
+              <div>
+                <h2>Bình giữ nhiệt Travel Mug</h2>
+                <p class="cart-item-price">850.000 ₫</p>
+              </div>
+
+              <div class="cart-item-actions">
+                <label class="quantity-field" for="quantity-2">
+                  <span>Số lượng</span>
+                  <input id="quantity-2" type="number" min="1" value="2" />
+                </label>
+
+                <button class="remove-button" type="button">Xóa</button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <aside class="order-summary" aria-labelledby="order-summary-heading">
+          <h2 id="order-summary-heading">Tóm tắt đơn hàng</h2>
+
+          <dl class="order-totals">
+            <dt>Tạm tính</dt>
+            <dd>2.900.000 ₫</dd>
+
+            <dt>Phí vận chuyển</dt>
+            <dd>Miễn phí</dd>
+
+            <dt class="order-total-label">Tổng cộng</dt>
+            <dd class="order-total-value">2.900.000 ₫</dd>
+          </dl>
+
+          <button class="checkout-button" type="button">Thanh toán</button>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 ShopLite</p>
+
+        <nav aria-label="Liên kết cuối trang">
+          <a href="#">Giới thiệu</a>
+          <a href="#">Liên hệ</a>
+          <a href="#">Chính sách đổi trả</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
