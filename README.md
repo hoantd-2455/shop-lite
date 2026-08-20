@@ -1,45 +1,25 @@
 # ShopLite
 
-ShopLite là mini-project e-commerce được xây dựng xuyên suốt lộ trình 18 ngày học frontend. Mỗi module nâng cấp sản phẩm của module trước, từ HTML/CSS tĩnh đến ReactJS và Next.js.
+ShopLite là mini-project e-commerce được xây dựng xuyên suốt lộ trình học frontend. Dự án phát triển dần từ giao diện tĩnh thành một ứng dụng web hoàn chỉnh.
 
-## Tiến độ hiện tại
+## Mục tiêu
 
-Đang ở **Module 1 — HTML, CSS & Tailwind**.
+- Thực hành các kỹ năng frontend qua một bài toán e-commerce thực tế.
+- Xây dựng giao diện responsive, danh sách sản phẩm, tìm kiếm, giỏ hàng, form và xác thực.
+- Rèn luyện cách tổ chức code, quản lý state, tích hợp API và triển khai sản phẩm.
 
-- Đã dựng trang danh sách sản phẩm tĩnh.
-- Có header với logo, ô tìm kiếm và badge giỏ hàng.
-- Có các product card placeholder và footer.
-- Chưa có JavaScript, gọi API hay chức năng giỏ hàng.
+## Công nghệ
+
+HTML/CSS → JavaScript → TypeScript + Vite → React → Next.js
 
 ## Chạy local
 
-1. Mở thư mục dự án bằng VS Code.
-2. Mở file `v1-html/index.html`.
-3. Chạy **Open with Live Server** hoặc bấm **Go Live**.
-
-Trang sẽ mở tại một địa chỉ tương tự `http://127.0.0.1:5500/v1-html/index.html`.
-
-## Cấu trúc thư mục
-
-```text
-.
-├── docs/                 # Lộ trình và tài liệu từng module/ngày
-│   ├── requirement.md
-│   ├── module-1.md
-│   └── day-1.md
-└── v1-html/              # Bản ShopLite HTML/CSS tĩnh
-    ├── index.html
-    └── style.css
-```
+Mở thư mục dự án bằng VS Code, chọn entry point của phần đang học và chạy bằng Live Server.
 
 ## Tài liệu
 
-- [Lộ trình tổng quan](docs/requirement.md)
-- [Module 1: HTML, CSS & Tailwind](docs/module-1.md)
-- [Ngày 1: HTML Semantic & CSS Nền Tảng](docs/day-1.md)
+Tài liệu học tập và yêu cầu của từng module được lưu trong thư mục [`docs`](docs/).
 
-## Công nghệ theo lộ trình
+## Dữ liệu mẫu
 
-HTML/CSS → JavaScript → TypeScript + Vite → ReactJS → Next.js
-
-Nguồn dữ liệu dự kiến: [DummyJSON](https://dummyjson.com/).
+Dự án sử dụng [DummyJSON](https://dummyjson.com/) làm API dữ liệu e-commerce giả lập trong các phần thực hành.

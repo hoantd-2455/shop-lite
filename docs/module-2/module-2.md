@@ -1,13 +1,30 @@
-Module 2 JavaScript
+# Module 2: JavaScript
 
-Tập trung vào: Phần khác biệt giữa JS và ngôn ngữ bạn đã biết — bất đồng bộ (async/await, Promise), array methods (map/filter/reduce), destructuring, this, và DOM API. Đừng tốn thời gian cho biến/vòng lặp/if-else, bạn đã biết rồi.
+## Trọng tâm
 
-Đóng góp vào ShopLite: Biến giao diện tĩnh thành ứng dụng động — render sản phẩm từ API, tìm kiếm, lọc, thêm vào giỏ, lưu giỏ bằng localStorage.
+Tập trung vào những phần JavaScript khác biệt so với các ngôn ngữ bạn đã biết:
 
-🎯 Mục tiêu cuối module
+- Bất đồng bộ với `async`/`await` và `Promise`.
+- Array methods như `map`, `filter` và `reduce`.
+- Destructuring.
+- `this`.
+- DOM API.
 
-- Thành thạo array methods và viết code theo phong cách hàm (functional)
-- Hiểu và dùng đúngasync/await, fetch, xử lý lỗi
-- Thao tác DOM: tạo/sửa/xóa element, gắn event, event delegation
-- Lưu trữ phía client bằng localStorage
-- ShopLite chạy thật: load sản phẩm từ API, tìm kiếm, giỏ hàng hoạt động
+Đừng tốn quá nhiều thời gian cho biến, vòng lặp và `if`/`else`; bạn đã có nền tảng lập trình cho các phần đó.
+
+## Đóng góp vào ShopLite
+
+Biến giao diện tĩnh thành ứng dụng động:
+
+- Render sản phẩm từ API.
+- Tìm kiếm và lọc sản phẩm.
+- Thêm sản phẩm vào giỏ.
+- Lưu giỏ hàng bằng `localStorage`.
+
+## Mục tiêu cuối module
+
+- Thành thạo array methods và viết code theo phong cách hàm (functional).
+- Hiểu và dùng đúng `async`/`await`, `fetch` và xử lý lỗi.
+- Thao tác DOM: tạo, sửa, xóa element; gắn event và event delegation.
+- Lưu trữ phía client bằng `localStorage`.
+- ShopLite chạy thật: load sản phẩm từ API, tìm kiếm và giỏ hàng hoạt động.

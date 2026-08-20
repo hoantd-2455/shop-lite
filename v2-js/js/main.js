@@ -1,27 +1,67 @@
 import { products } from "./data.js";
-import { filterByKeyword, sortByPrice } from "./product-utils.js";
+import { filterByKeyword } from "./product-utils.js";
 
-const productNames = products.map((product) => product.title);
+const productListElement = document.querySelector("#product-list");
+const searchFormElement = document.querySelector(".search-form");
+const searchInputElement = document.querySelector("#search");
+const emptyStateElement = document.querySelector("#empty-state");
 
-const audioProducts = products.filter(
-  (product) => product.category === "audio",
-);
+function formatPrice(price) {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  }).format(price);
+}
 
-const totalPrice = products.reduce(
-  (total, product) => total + product.price,
-  0,
-);
+function productCardHTML(product) {
+  const { id, title, price, thumbnail, category, rating } = product;
 
-const productById = products.find((product) => product.id === 2);
+  return `
+    <article class="product-card" data-id="${id}">
+      <img src="${thumbnail}" alt="${title}" />
+      <h2>
+        <a href="product.html?id=${id}">${title}</a>
+      </h2>
+      <p class="product-description">
+        ${category} · ⭐ ${rating}
+      </p>
+      <p class="product-price">${formatPrice(price)}</p>
+      <button class="add-to-cart-button" type="button">
+        Thêm vào giỏ
+      </button>
+    </article>
+  `;
+}
 
-const sortedProducts = sortByPrice(products, "desc");
-const searchResult = filterByKeyword(products, "loa");
+function renderProducts(list) {
+  productListElement.innerHTML = list.map(productCardHTML).join("");
+  emptyStateElement.hidden = list.length > 0;
+}
 
-console.log("Tên sản phẩm:", productNames);
-console.log("Sản phẩm audio:", audioProducts);
-console.log("Tổng giá:", totalPrice);
-console.log("Sản phẩm id = 2:", productById);
-console.log("Giá giảm dần:", sortedProducts);
-console.log("Tìm 'loa':", searchResult);
+searchFormElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
 
-console.table(products);
+searchInputElement.addEventListener("input", (event) => {
+  const filteredProducts = filterByKeyword(products, event.target.value);
+
+  renderProducts(filteredProducts);
+});
+
+productListElement.addEventListener("click", (event) => {
+  const addButton = event.target.closest(".add-to-cart-button");
+
+  if (!addButton) {
+    return;
+  }
+
+  const productCard = addButton.closest("[data-id]");
+  const productId = Number(productCard.dataset.id);
+
+  const selectedProduct = products.find((product) => product.id === productId);
+
+  console.log("Đã thêm vào giỏ:", selectedProduct);
+});
+
+renderProducts(products);
