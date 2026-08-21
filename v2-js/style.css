@@ -434,3 +434,28 @@ a {
     align-items: start;
   }
 }
+
+.product-status {
+  min-height: 24px;
+  margin-top: var(--space-md);
+  color: var(--color-muted);
+}
+
+.product-status[data-state="error"] {
+  color: #dc2626;
+}
+
+.empty-cart {
+  margin: 0;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+button:disabled,
+button:disabled:hover {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+}

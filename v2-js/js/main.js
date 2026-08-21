@@ -1,10 +1,15 @@
-import { products } from "./data.js";
+import { getProducts } from "./api.js";
 import { filterByKeyword } from "./product-utils.js";
+import { addToCart, getCartItemCount } from "./cart.js";
 
 const productListElement = document.querySelector("#product-list");
 const searchFormElement = document.querySelector(".search-form");
 const searchInputElement = document.querySelector("#search");
 const emptyStateElement = document.querySelector("#empty-state");
+const productStatusElement = document.querySelector("#product-status");
+const cartBadgeElement = document.querySelector(".cart-badge");
+
+let products = [];
 
 function formatPrice(price) {
   return new Intl.NumberFormat("vi-VN", {
@@ -61,7 +66,51 @@ productListElement.addEventListener("click", (event) => {
 
   const selectedProduct = products.find((product) => product.id === productId);
 
+  if (!selectedProduct) {
+    return;
+  }
+
+  addToCart(selectedProduct);
+  renderCartBadge();
+
   console.log("Đã thêm vào giỏ:", selectedProduct);
 });
 
-renderProducts(products);
+function showLoading() {
+  productListElement.innerHTML = "";
+  emptyStateElement.hidden = true;
+  productStatusElement.dataset.state = "loading";
+  productStatusElement.textContent = "Đang tải sản phẩm...";
+}
+
+function showError() {
+  productListElement.innerHTML = "";
+  emptyStateElement.hidden = true;
+  productStatusElement.dataset.state = "error";
+  productStatusElement.textContent =
+    "Không thể tải sản phẩm. Vui lòng kiểm tra kết nối và thử lại.";
+}
+
+async function initialize() {
+  showLoading();
+  searchInputElement.disabled = true;
+
+  try {
+    products = await getProducts();
+
+    productStatusElement.textContent = "";
+    productStatusElement.dataset.state = "";
+    renderProducts(products);
+    searchInputElement.disabled = false;
+  } catch (error) {
+    console.error("Không thể tải products:", error);
+    showError();
+  }
+}
+
+function renderCartBadge() {
+  cartBadgeElement.textContent = getCartItemCount();
+}
+
+renderCartBadge();
+initialize();

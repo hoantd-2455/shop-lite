@@ -38,34 +38,9 @@
     <main class="container">
       <a class="back-link" href="index.html">← Quay lại danh sách sản phẩm</a>
 
-      <article class="product-detail">
-        <img
-          class="product-detail-image"
-          src="https://placehold.co/900x600?text=AirSound"
-          alt="Tai nghe không dây AirSound"
-        />
+      <p class="product-status" id="product-status" aria-live="polite"></p>
 
-        <div>
-          <p class="product-category">Thiết bị âm thanh</p>
-          <h1>Tai nghe không dây AirSound</h1>
-          <p class="product-detail-price">1.200.000 ₫</p>
-          <p class="product-detail-description">
-            AirSound là tai nghe không dây nhỏ gọn với âm thanh cân bằng, kết
-            nối Bluetooth ổn định và thời lượng pin lên đến 24 giờ.
-          </p>
-
-          <dl class="product-meta">
-            <dt>Tình trạng</dt>
-            <dd>Còn hàng</dd>
-            <dt>Đánh giá</dt>
-            <dd>4.8 / 5</dd>
-            <dt>Giao hàng</dt>
-            <dd>Miễn phí nội thành</dd>
-          </dl>
-
-          <button type="button">Thêm vào giỏ</button>
-        </div>
-      </article>
+      <article class="product-detail" id="product-detail" hidden></article>
     </main>
 
     <footer class="site-footer">
@@ -79,5 +54,6 @@
         </nav>
       </div>
     </footer>
+    <script type="module" src="./js/product.js"></script>
   </body>
 </html>

@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <script type="module" src="./js/main.js"></script>
-
   <body>
     <header class="site-header">
       <div class="container header-content">
@@ -42,6 +40,8 @@
         <h1 id="products-heading">Sản phẩm</h1>
         <p>Khám phá các sản phẩm mới nhất tại ShopLite.</p>
 
+        <p class="product-status" id="product-status" aria-live="polite"></p>
+
         <div class="product-list" id="product-list"></div>
 
         <p class="empty-state" id="empty-state" hidden>
@@ -62,5 +62,6 @@
         </nav>
       </div>
     </footer>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>

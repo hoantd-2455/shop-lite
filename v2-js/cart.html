@@ -44,69 +44,14 @@
             Sản phẩm trong giỏ hàng
           </h2>
 
-          <article class="cart-item">
-            <img
-              src="https://placehold.co/240x160?text=AirSound"
-              alt="Tai nghe không dây AirSound"
-            />
-
-            <div class="cart-item-content">
-              <div>
-                <h2>Tai nghe không dây AirSound</h2>
-                <p class="cart-item-price">1.200.000 ₫</p>
-              </div>
-
-              <div class="cart-item-actions">
-                <label class="quantity-field" for="quantity-1">
-                  <span>Số lượng</span>
-                  <input id="quantity-1" type="number" min="1" value="1" />
-                </label>
-
-                <button class="remove-button" type="button">Xóa</button>
-              </div>
-            </div>
-          </article>
-
-          <article class="cart-item">
-            <img
-              src="https://placehold.co/240x160?text=Travel+Mug"
-              alt="Bình giữ nhiệt Travel Mug"
-            />
-
-            <div class="cart-item-content">
-              <div>
-                <h2>Bình giữ nhiệt Travel Mug</h2>
-                <p class="cart-item-price">850.000 ₫</p>
-              </div>
-
-              <div class="cart-item-actions">
-                <label class="quantity-field" for="quantity-2">
-                  <span>Số lượng</span>
-                  <input id="quantity-2" type="number" min="1" value="2" />
-                </label>
-
-                <button class="remove-button" type="button">Xóa</button>
-              </div>
-            </div>
-          </article>
+          <div id="cart-items"></div>
         </section>
 
-        <aside class="order-summary" aria-labelledby="order-summary-heading">
-          <h2 id="order-summary-heading">Tóm tắt đơn hàng</h2>
-
-          <dl class="order-totals">
-            <dt>Tạm tính</dt>
-            <dd>2.900.000 ₫</dd>
-
-            <dt>Phí vận chuyển</dt>
-            <dd>Miễn phí</dd>
-
-            <dt class="order-total-label">Tổng cộng</dt>
-            <dd class="order-total-value">2.900.000 ₫</dd>
-          </dl>
-
-          <button class="checkout-button" type="button">Thanh toán</button>
-        </aside>
+        <aside
+          class="order-summary"
+          id="order-summary"
+          aria-labelledby="order-summary-heading"
+        ></aside>
       </div>
     </main>
 
@@ -121,5 +66,6 @@
         </nav>
       </div>
     </footer>
+    <script type="module" src="./js/cart-page.js"></script>
   </body>
 </html>
