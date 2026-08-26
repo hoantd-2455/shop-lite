@@ -1,58 +1,20 @@
 import "./style.css";
-import type { FetchState, Product, SortDir } from "./types";
 
-const sampleProducts: Product[] = [
-  {
-    id: 1,
-    title: "Tai nghe không dây AirSound",
-    description: "Tai nghe nhỏ gọn cho nhu cầu hằng ngày.",
-    price: 1200000,
-    discountPercentage: 10,
-    rating: 4.6,
-    stock: 24,
-    category: "audio",
-    thumbnail: "https://placehold.co/640x480/e5e7eb/64748b?text=Product+1",
-    images: [],
-  },
-  {
-    id: 2,
-    title: "Bình giữ nhiệt Travel Mug",
-    description: "Giữ nóng và lạnh hiệu quả.",
-    price: 850000,
-    discountPercentage: 5,
-    rating: 4.8,
-    stock: 12,
-    category: "lifestyle",
-    thumbnail: "https://placehold.co/640x480/e5e7eb/64748b?text=Product+2",
-    images: [],
-  },
-];
+import { getProducts } from "./api";
+import { addToCart, getCartItemCount } from "./cart";
+import { getRequiredElement } from "./dom";
+import { filterByKeyword } from "./product-utils";
+import type { FetchState, Product } from "./types";
 
-const productState: FetchState<Product[]> = {
-  status: "success",
-  data: sampleProducts,
-};
+const productListElement = getRequiredElement<HTMLDivElement>("#product-list");
+const searchFormElement = getRequiredElement<HTMLFormElement>(".search-form");
+const searchInputElement = getRequiredElement<HTMLInputElement>("#search");
+const emptyStateElement = getRequiredElement<HTMLParagraphElement>("#empty-state");
+const productStatusElement = getRequiredElement<HTMLParagraphElement>("#product-status");
+const cartBadgeElement = getRequiredElement<HTMLSpanElement>(".cart-badge");
 
-function sortProducts(products: Product[], direction: SortDir): Product[] {
-  const multiplier = direction === "asc" ? 1 : -1;
-
-  return [...products].sort((first, second) => {
-    return (first.price - second.price) * multiplier;
-  });
-}
-
-function getStatusMessage(state: FetchState<Product[]>): string {
-  switch (state.status) {
-    case "idle":
-      return "Chưa gửi request nào.";
-    case "loading":
-      return "Đang tải sản phẩm...";
-    case "error":
-      return state.error ?? "Không thể tải sản phẩm.";
-    case "success":
-      return `Đã có ${state.data?.length ?? 0} sản phẩm mẫu.`;
-  }
-}
+let products: Product[] = [];
+let productState: FetchState<Product[]> = { status: "idle" };
 
 function formatPrice(price: number): string {
   return new Intl.NumberFormat("vi-VN", {
@@ -63,49 +25,102 @@ function formatPrice(price: number): string {
 }
 
 function productCardHTML(product: Product): string {
+  const { id, title, price, thumbnail, category, rating } = product;
+
   return `
-    <article class="product-card">
-      <img src="${product.thumbnail}" alt="${product.title}" />
-      <p class="product-category">${product.category}</p>
-      <h2>${product.title}</h2>
-      <p class="product-description">${product.description}</p>
-      <p class="product-price">${formatPrice(product.price)}</p>
+    <article class="product-card" data-id="${id}">
+      <img src="${thumbnail}" alt="${title}" />
+      <h2><a href="product.html?id=${id}">${title}</a></h2>
+      <p class="product-description">${category} · ⭐ ${rating}</p>
+      <p class="product-price">${formatPrice(price)}</p>
+      <button class="add-to-cart-button" type="button">Thêm vào giỏ</button>
     </article>
   `;
 }
 
-const productList = sortProducts(sampleProducts, "asc");
-const appElement = document.querySelector<HTMLDivElement>("#app");
-
-if (!appElement) {
-  throw new Error("Không tìm thấy phần tử #app.");
+function renderProducts(list: Product[]): void {
+  productListElement.innerHTML = list.map(productCardHTML).join("");
+  emptyStateElement.hidden = list.length > 0;
 }
 
-appElement.innerHTML = `
-  <header class="site-header">
-    <div class="container">
-      <a class="logo" href="/">ShopLite</a>
-      <span>Module 3 · TypeScript</span>
-    </div>
-  </header>
+function renderCartBadge(): void {
+  cartBadgeElement.textContent = String(getCartItemCount());
+}
 
-  <main class="container">
-    <section class="product-section" aria-labelledby="products-heading">
-      <p class="eyebrow">Day 1 · TypeScript foundations</p>
-      <h1 id="products-heading">Sản phẩm</h1>
-      <p class="status">${getStatusMessage(productState)}</p>
-      <div class="product-list">
-        ${productList.map(productCardHTML).join("")}
-      </div>
-    </section>
+function showLoading(): void {
+  productState = { status: "loading" };
+  productListElement.innerHTML = "";
+  emptyStateElement.hidden = true;
+  productStatusElement.dataset.state = productState.status;
+  productStatusElement.textContent = "Đang tải sản phẩm...";
+}
 
-    <section class="type-notes" aria-labelledby="types-heading">
-      <h2 id="types-heading">TypeScript đang bảo vệ gì?</h2>
-      <ul>
-        <li><code>sampleProducts</code> bắt buộc là mảng <code>Product</code>.</li>
-        <li><code>"asc"</code> chỉ là một trong hai giá trị của <code>SortDir</code>.</li>
-        <li><code>FetchState&lt;Product[]&gt;</code> mô tả trạng thái tải danh sách.</li>
-      </ul>
-    </section>
-  </main>
-`;
+function showError(error: unknown): void {
+  const message = error instanceof Error ? error.message : "Lỗi không xác định";
+
+  productState = { status: "error", error: message };
+  productListElement.innerHTML = "";
+  emptyStateElement.hidden = true;
+  productStatusElement.dataset.state = productState.status;
+  productStatusElement.textContent = "Không thể tải sản phẩm. Vui lòng thử lại.";
+}
+
+async function initialize(): Promise<void> {
+  showLoading();
+  searchInputElement.disabled = true;
+
+  try {
+    products = await getProducts();
+    productState = { status: "success", data: products };
+    productStatusElement.textContent = "";
+    productStatusElement.dataset.state = "";
+    renderProducts(products);
+  } catch (error: unknown) {
+    console.error("Không thể tải products:", error);
+    showError(error);
+  } finally {
+    searchInputElement.disabled = false;
+  }
+}
+
+searchFormElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
+
+searchInputElement.addEventListener("input", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLInputElement)) {
+    return;
+  }
+
+  renderProducts(filterByKeyword(products, target.value));
+});
+
+productListElement.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  const addButton = target.closest<HTMLButtonElement>(".add-to-cart-button");
+
+  if (!addButton) {
+    return;
+  }
+
+  const productCard = addButton.closest<HTMLElement>("[data-id]");
+  const productId = Number(productCard?.dataset.id);
+  const selectedProduct = products.find((product) => product.id === productId);
+
+  if (!selectedProduct) {
+    return;
+  }
+
+  addToCart(selectedProduct);
+  renderCartBadge();
+});
+
+renderCartBadge();
+void initialize();

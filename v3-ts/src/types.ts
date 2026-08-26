@@ -12,8 +12,9 @@ export interface Product {
   images: string[];
 }
 
-/** Một sản phẩm khi đã nằm trong giỏ hàng sẽ có thêm số lượng. */
-export interface CartItem extends Product {
+/** Dữ liệu tối thiểu cần lưu ở localStorage cho một item trong giỏ hàng. */
+export interface CartItem
+  extends Pick<Product, "id" | "title" | "price" | "thumbnail"> {
   quantity: number;
 }
 

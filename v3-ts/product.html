@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShopLite | Sản phẩm</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="logo" href="index.html">ShopLite</a>
+        <form class="search-form">
+          <label class="sr-only" for="search">Tìm kiếm sản phẩm</label>
+          <input id="search" name="search" type="search" placeholder="Tìm kiếm sản phẩm..." />
+          <button type="submit">Tìm kiếm</button>
+        </form>
+        <a class="cart-link" href="cart.html">Giỏ hàng <span class="cart-badge">0</span></a>
+      </div>
+    </header>
+
+    <main class="container">
+      <a class="back-link" href="index.html">← Quay lại danh sách sản phẩm</a>
+      <p class="product-status" id="product-status" aria-live="polite"></p>
+      <article class="product-detail" id="product-detail" hidden></article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 ShopLite</p>
+        <nav aria-label="Liên kết cuối trang">
+          <a href="#">Giới thiệu</a><a href="#">Liên hệ</a><a href="#">Chính sách đổi trả</a>
+        </nav>
+      </div>
+    </footer>
+    <script type="module" src="/src/product.ts"></script>
+  </body>
+</html>
