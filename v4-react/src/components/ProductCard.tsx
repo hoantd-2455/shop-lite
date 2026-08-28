@@ -2,6 +2,7 @@ import type { Product } from "../types";
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart: (product: Product) => void;
 }
 
 function formatPrice(price: number): string {
@@ -12,7 +13,7 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const isOutOfStock = product.stock === 0;
 
   return (
@@ -46,6 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <button
         className="mt-4 rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         disabled={isOutOfStock}
+        onClick={() => onAddToCart(product)}
         type="button"
       >
         {isOutOfStock ? "Tạm hết hàng" : "Thêm vào giỏ"}
