@@ -1,8 +1,8 @@
 import type { Product } from "../types";
+import { useCartStore } from "../store/cartStore";
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
   onViewProduct: (productId: number) => void;
 }
 
@@ -16,10 +16,10 @@ function formatPrice(price: number): string {
 
 export function ProductCard({
   product,
-  onAddToCart,
   onViewProduct,
 }: ProductCardProps) {
   const isOutOfStock = product.stock === 0;
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
@@ -60,7 +60,7 @@ export function ProductCard({
         <button
           className="rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
           disabled={isOutOfStock}
-          onClick={() => onAddToCart(product)}
+          onClick={() => addToCart(product)}
           type="button"
         >
           {isOutOfStock ? "Tạm hết hàng" : "Thêm vào giỏ"}

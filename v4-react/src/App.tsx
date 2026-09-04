@@ -3,13 +3,13 @@ import { Header } from "./components/Header";
 import { LoginForm } from "./components/LoginForm";
 import { ProductDetail } from "./components/ProductDetail";
 import { ProductList } from "./components/ProductList";
-import type { CartItem, Product } from "./types";
 import { useProducts } from "./hooks/useProducts";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  const { theme } = useTheme();
   const { data: products = [], error, isError, isFetching, isPending, refetch } =
     useProducts();
 
@@ -20,40 +20,15 @@ function App() {
       product.category.toLowerCase().includes(normalizedQuery)
     );
   });
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-
-  function handleAddToCart(product: Product) {
-    setCartItems((currentCart) => {
-      const existingItem = currentCart.find((item) => item.id === product.id);
-
-      if (existingItem) {
-        return currentCart.map((item) => {
-          return item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item;
-        });
-      }
-
-      return [
-        ...currentCart,
-        {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          thumbnail: product.thumbnail,
-          quantity: 1,
-        },
-      ];
-    });
-  }
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
-      <Header
-        cartCount={cartCount}
-        onSearchChange={setSearchQuery}
-        searchQuery={searchQuery}
-      />
+    <div
+      className={
+        theme === "dark"
+          ? "min-h-screen bg-slate-950 text-slate-100"
+          : "min-h-screen bg-slate-50 text-slate-800"
+      }
+    >
+      <Header onSearchChange={setSearchQuery} searchQuery={searchQuery} />
 
       <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
         <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">
@@ -86,7 +61,6 @@ function App() {
               <p className="mt-5 text-sm text-slate-500">Đang đồng bộ dữ liệu...</p>
             )}
             <ProductList
-              onAddToCart={handleAddToCart}
               onViewProduct={setSelectedProductId}
               products={filteredProducts}
             />
@@ -109,7 +83,6 @@ function App() {
 
       {selectedProductId && (
         <ProductDetail
-          onAddToCart={handleAddToCart}
           onClose={() => setSelectedProductId(null)}
           productId={selectedProductId}
         />

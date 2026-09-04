@@ -1,39 +1,73 @@
-Ngày 3 useEffect & Data Fetching
+# Day 3 — `useEffect` và Data Fetching
 
-📖 Lý thuyết cơ bản
-Side effect: việc "ngoài render" — gọi API, set timer, đụng vào API trình duyệt. React render phải thuần túy, nên effect tách riêng.
+## Mục tiêu trong ngày
 
-useEffect: useEffect(() => { ... }, [deps]). Hàm chạy sau render. Dependency array quyết định khi nào chạy lại:
+- Hiểu side effect và dependency array của `useEffect`.
+- Phân biệt render thuần túy với thao tác ngoài React.
+- Tạo custom hook để tái sử dụng logic fetch.
+- Quản lý server state bằng TanStack Query.
 
-- [] → chạy một lần sau mount (hợp để fetch ban đầu).
-- [dep] → chạy lại khi dep đổi.
-- không có array → chạy sau mọi render (hiếm khi cần, dễ gây loop).
-- return () => {...} → cleanup (huỷ timer, huỷ subscription) trước lần chạy kế / khi unmount.
+## Kiến thức trọng tâm
 
-Fetch trong React: gọi API trong useEffect, lưu kết quả vào state. Luôn quản lý 3 state: loading, data, error. (Lưu ý: React hiện đại khuyến khích dùng thư viện như TanStack Query cho data fetching thực tế, nhưng nắm useEffect trước.)
+### Side effect và `useEffect`
 
-Custom hook: hàm bắt đầu bằng use... gói logic dùng chung (vd useProducts()) — tái sử dụng giữa các component. Đây là cách React chia sẻ logic.
+Side effect là công việc ngoài quá trình render, ví dụ gọi API, tạo timer hoặc thay đổi `document.title`. Render React nên thuần túy: cùng props/state thì tạo cùng UI.
 
-Fetch bằng thư viện — TanStack Query (React Query): tự viết useEffect + 3 state (loading/data/error) lặp đi lặp lại, lại thiếu caching, refetch, retry, chống race condition. Trong dự án thật người ta dùng TanStack Query để quản lý "server state" (dữ liệu thuộc về server, vd danh sách sản phẩm):
+```tsx
+useEffect(() => {
+  document.title = "ShopLite";
 
-- Bọc app bằng <QueryClientProvider>.
-- useQuery({ queryKey: ['products'], queryFn: fetchProducts }) → trả về data, isLoading, isError sẵn, tự cache theo queryKey, tự refetch khi cần, dedupe request trùng.
-- useMutation cho thao tác ghi (POST/PUT/DELETE).
-- Phân biệt quan trọng: server state (dữ liệu từ API — sản phẩm) ≠ client state (state UI cục bộ — giỏ hàng, theme). TanStack Query lo server state; client state để useState/Context/Redux. Đây là tư duy chia state then chốt của dự án hiện đại.
-- (SWR là thư viện tương tự, nhẹ hơn; biết là đủ. RTK Query — học ở Day 4 — là bản tích hợp sẵn trong Redux, chọn 1 trong 2.)
+  return () => {
+    // cleanup khi component unmount hoặc trước effect tiếp theo
+  };
+}, []);
+```
 
-🧪 Lab — thực hành
-useEffect (hiểu bản chất): thực hành dependency array ([], [dep], không có) và cleanup; tự viết hook useProducts bằng useEffect + 3 state (loading/data/error) để nắm gốc vấn đề.
-Refactor sang TanStack Query: cài @tanstack/react-query, bọc app bằng <QueryClientProvider>, viết lại useProducts bằng useQuery({ queryKey, queryFn }).
-So sánh & quan sát cache: rời trang rồi quay lại, mở DevTools Network để thấy TanStack Query không gọi API lại ngay (phục vụ từ cache) và refetch nền khi cần.
+Dependency array quyết định khi effect chạy lại:
 
-🛒 Đóng góp vào ShopLite
-Chuyển sang fetch thật + TanStack Query: danh sách sản phẩm dùng useProducts (bọc useQuery) gọi DummyJSON GET /products.
-Trang chi tiết dùng useQuery(['product', id], () => getProduct(id)).
-Trải nghiệm tải: hiển thị skeleton/spinner khi isLoading, thông báo lỗi + nút thử lại khi isError.
-Xác lập rõ ranh giới: sản phẩm = server state (TanStack Query lo); giỏ hàng tạm vẫn là client state (ngày 4 chuyển sang store).
+| Dependency | Khi chạy |
+| --- | --- |
+| `[]` | Một lần sau mount |
+| `[value]` | Sau mount và khi `value` thay đổi |
+| Không có array | Sau mọi render; hiếm khi cần |
 
-✅ Tiêu chí hoàn thành
-Sản phẩm và trang chi tiết load qua TanStack Query, có đủ trạng thái loading/error tử tế.
-Logic fetch nằm trong custom hook tái dùng được (useProducts, useProduct).
-Bạn quan sát được cache hoạt động và giải thích được khác biệt server state vs client state.
+### Fetch thủ công và custom hook
+
+Nếu fetch bằng `useEffect`, component thường phải quản lý ba state: `loading`, `data`, `error`. Custom hook như `useProducts()` gói logic này để component chỉ nhận kết quả cần hiển thị.
+
+### TanStack Query và server state
+
+Trong ứng dụng thật, TanStack Query thay phần fetch lặp lại bằng `useQuery`:
+
+```tsx
+useQuery({
+  queryKey: ["products"],
+  queryFn: getProducts,
+});
+```
+
+Query key định danh data trong cache. TanStack Query quản lý loading, error, retry, refetch và cache; sản phẩm là server state nên không nên đưa vào Zustand/Redux.
+
+## Lab
+
+1. Thử `useEffect` với `[]`, `[value]` và cleanup timer.
+2. Viết fetch thủ công có ba state `loading/data/error` để hiểu vấn đề.
+3. Refactor logic đó thành custom hook.
+4. Cài `@tanstack/react-query`, tạo `QueryClientProvider`.
+5. Quan sát Network khi mở lại cùng một query để thấy cache hoạt động.
+
+## Áp dụng vào ShopLite
+
+- `QueryClientProvider` bọc toàn bộ app.
+- `useProducts()` fetch danh sách từ DummyJSON với key `["products"]`.
+- `useProduct(id)` fetch chi tiết với key `["product", id]`.
+- List và detail đều có skeleton khi pending, error message và nút retry.
+- `ProductDetail` dùng `useEffect` để đổi `document.title`, rồi cleanup khi đóng panel.
+- API response được kiểm tra bằng type guard trước khi dùng như `Product`.
+
+## Hoàn thành khi
+
+- Danh sách và chi tiết sản phẩm dùng TanStack Query.
+- Logic query nằm trong custom hook tái sử dụng.
+- Có loading, error và retry rõ ràng.
+- Giải thích được server state khác client state và query key tạo cache như thế nào.

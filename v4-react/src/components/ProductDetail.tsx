@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useProduct } from "../hooks/useProduct";
-import type { Product } from "../types";
+import { useCartStore } from "../store/cartStore";
 
 interface ProductDetailProps {
   productId: number;
   onClose: () => void;
-  onAddToCart: (product: Product) => void;
 }
 
 function formatPrice(price: number): string {
@@ -19,9 +18,9 @@ function formatPrice(price: number): string {
 export function ProductDetail({
   productId,
   onClose,
-  onAddToCart,
 }: ProductDetailProps) {
   const { data: product, error, isError, isPending, refetch } = useProduct(productId);
+  const addToCart = useCartStore((state) => state.addToCart);
   const productTitle = product?.title;
 
   useEffect(() => {
@@ -103,7 +102,7 @@ export function ProductDetail({
               <button
                 className="mt-6 w-full rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
                 disabled={product.stock === 0}
-                onClick={() => onAddToCart(product)}
+                onClick={() => addToCart(product)}
                 type="button"
               >
                 {product.stock === 0 ? "Tạm hết hàng" : "Thêm vào giỏ"}

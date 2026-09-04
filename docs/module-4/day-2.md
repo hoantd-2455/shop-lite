@@ -63,7 +63,7 @@ Không lưu derived state nếu có thể tính từ state hiện có. Ví dụ 
 
 ## Áp dụng vào ShopLite
 
-- `App` sở hữu `searchQuery` và `cartItems`.
+- Ở giai đoạn này, `App` sở hữu `searchQuery` và `cartItems`; Day 4 sẽ chuyển giỏ hàng sang Zustand.
 - `SearchBar` nhận `value` và `onValueChange`; danh sách lọc theo thời gian thực.
 - `ProductCard` gọi `onAddToCart(product)`; `App` cập nhật `cartItems` bằng mảng mới.
 - Badge trong `Header` nhận tổng quantity từ props.
