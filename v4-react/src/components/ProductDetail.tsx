@@ -1,10 +1,10 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProduct } from "../hooks/useProduct";
 import { useCartStore } from "../store/cartStore";
 
 interface ProductDetailProps {
   productId: number;
-  onClose: () => void;
 }
 
 function formatPrice(price: number): string {
@@ -15,12 +15,10 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export function ProductDetail({
-  productId,
-  onClose,
-}: ProductDetailProps) {
+export function ProductDetail({ productId }: ProductDetailProps) {
   const { data: product, error, isError, isPending, refetch } = useProduct(productId);
   const addToCart = useCartStore((state) => state.addToCart);
+  const navigate = useNavigate();
   const productTitle = product?.title;
 
   useEffect(() => {
@@ -37,22 +35,8 @@ export function ProductDetail({
   }, [productTitle]);
 
   return (
-    <div className="fixed inset-0 z-10 grid place-items-center bg-slate-950/45 p-4" role="presentation">
-      <section
-        aria-labelledby="product-detail-heading"
-        className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-7"
-        role="dialog"
-      >
-        <div className="flex justify-end">
-          <button
-            aria-label="Đóng chi tiết sản phẩm"
-            className="rounded-lg px-3 py-2 font-semibold text-slate-600 hover:bg-slate-100"
-            onClick={onClose}
-            type="button"
-          >
-            Đóng
-          </button>
-        </div>
+    <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:py-14">
+      <button className="font-semibold text-blue-600" onClick={() => navigate("/")} type="button">← Quay lại sản phẩm</button>
 
         {isPending ? (
           <div className="animate-pulse">
@@ -62,7 +46,7 @@ export function ProductDetail({
             <div className="mt-2 h-4 w-5/6 rounded bg-slate-200" />
           </div>
         ) : isError ? (
-          <div className="rounded-xl bg-red-50 p-5 text-red-800">
+          <div className="mt-6 rounded-xl bg-red-50 p-5 text-red-800">
             <h2 className="font-bold">Không thể tải chi tiết sản phẩm</h2>
             <p className="mt-1 text-sm">{error.message}</p>
             <button
@@ -74,7 +58,7 @@ export function ProductDetail({
             </button>
           </div>
         ) : product ? (
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="mt-6 grid gap-6 rounded-2xl bg-white p-5 shadow-sm md:grid-cols-2 sm:p-7">
             <img
               alt={product.title}
               className="aspect-square w-full rounded-xl object-cover"
@@ -110,7 +94,6 @@ export function ProductDetail({
             </div>
           </div>
         ) : null}
-      </section>
     </div>
   );
 }

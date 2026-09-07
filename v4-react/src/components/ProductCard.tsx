@@ -3,7 +3,6 @@ import { useCartStore } from "../store/cartStore";
 
 interface ProductCardProps {
   product: Product;
-  onViewProduct: (productId: number) => void;
 }
 
 function formatPrice(price: number): string {
@@ -14,10 +13,7 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export function ProductCard({
-  product,
-  onViewProduct,
-}: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
   const isOutOfStock = product.stock === 0;
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -50,13 +46,12 @@ export function ProductCard({
       <p className="mt-1 text-sm text-slate-500">⭐ {product.rating} / 5</p>
 
       <div className="mt-4 grid gap-2">
-        <button
+        <Link
           className="rounded-lg border border-blue-200 px-4 py-2.5 font-semibold text-blue-700 transition hover:bg-blue-50"
-          onClick={() => onViewProduct(product.id)}
-          type="button"
+          to={`/product/${product.id}`}
         >
           Xem chi tiết
-        </button>
+        </Link>
         <button
           className="rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
           disabled={isOutOfStock}
@@ -68,4 +63,6 @@ export function ProductCard({
       </div>
     </article>
   );
-}
+});
+import { memo } from "react";
+import { Link } from "react-router-dom";

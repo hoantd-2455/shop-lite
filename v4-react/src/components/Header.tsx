@@ -1,13 +1,6 @@
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
 import { useCartStore } from "../store/cartStore";
-import { CartDrawer } from "./CartDrawer";
-import { SearchBar } from "./SearchBar";
-
-interface HeaderProps {
-  searchQuery: string;
-  onSearchChange: (nextQuery: string) => void;
-}
 
 function formatPrice(price: number): string {
   return new Intl.NumberFormat("vi-VN", {
@@ -17,11 +10,7 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export function Header({
-  searchQuery,
-  onSearchChange,
-}: HeaderProps) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+export function Header() {
   const { theme, toggleTheme } = useTheme();
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -39,36 +28,30 @@ export function Header({
       }
     >
       <div className="mx-auto flex min-h-18 w-full max-w-6xl flex-wrap items-center gap-4 px-4 py-4 sm:px-6">
-        <a className="text-2xl font-bold text-blue-600" href="#top">
+        <Link className="text-2xl font-bold text-blue-600" to="/">
           ShopLite
-        </a>
+        </Link>
 
-        <SearchBar onValueChange={onSearchChange} value={searchQuery} />
-
-        <button
-          className={
-            theme === "dark"
-              ? "font-medium text-slate-100"
-              : "font-medium text-slate-700"
-          }
-          onClick={() => setIsCartOpen(true)}
-          type="button"
-        >
-          Giỏ hàng {cartTotal > 0 && `· ${formatPrice(cartTotal)}`} {" "}
-          <span className="inline-grid size-6 place-items-center rounded-full bg-red-500 text-sm font-bold text-white">
-            {cartCount}
-          </span>
-        </button>
+        <nav aria-label="Điều hướng chính" className="ml-auto flex items-center gap-4">
+          <NavLink className={({ isActive }) => isActive ? "font-semibold text-blue-600" : theme === "dark" ? "font-medium text-slate-100" : "font-medium text-slate-700"} to="/">Sản phẩm</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-semibold text-blue-600" : theme === "dark" ? "font-medium text-slate-100" : "font-medium text-slate-700"} to="/cart">
+            Giỏ hàng {cartTotal > 0 && `· ${formatPrice(cartTotal)}`} {" "}
+            <span className="inline-grid size-6 place-items-center rounded-full bg-red-500 text-sm font-bold text-white">{cartCount}</span>
+          </NavLink>
+        </nav>
         <button
           aria-label="Đổi giao diện sáng hoặc tối"
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+          className={
+            theme === "dark"
+              ? "rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-slate-800"
+              : "rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+          }
           onClick={toggleTheme}
           type="button"
         >
           {theme === "dark" ? "☀️ Sáng" : "🌙 Tối"}
         </button>
       </div>
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 }

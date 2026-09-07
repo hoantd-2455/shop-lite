@@ -1,112 +1,34 @@
-import { useState } from "react";
-import { Header } from "./components/Header";
-import { LoginForm } from "./components/LoginForm";
-import { ProductDetail } from "./components/ProductDetail";
-import { ProductList } from "./components/ProductList";
-import { useProducts } from "./hooks/useProducts";
-import { useTheme } from "./hooks/useTheme";
+import { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+import { AppLayout } from "./components/AppLayout";
 
-function App() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-  const { theme } = useTheme();
-  const { data: products = [], error, isError, isFetching, isPending, refetch } =
-    useProducts();
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
-  const normalizedQuery = searchQuery.trim().toLowerCase();
-  const filteredProducts = products.filter((product) => {
-    return (
-      product.title.toLowerCase().includes(normalizedQuery) ||
-      product.category.toLowerCase().includes(normalizedQuery)
-    );
-  });
+function PageFallback() {
   return (
-    <div
-      className={
-        theme === "dark"
-          ? "min-h-screen bg-slate-950 text-slate-100"
-          : "min-h-screen bg-slate-50 text-slate-800"
-      }
-    >
-      <Header onSearchChange={setSearchQuery} searchQuery={searchQuery} />
-
-      <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
-        <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-          React · Day 3
-        </p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-          Sản phẩm mới nhất
-        </h1>
-        <p className="mt-3 text-slate-600">
-          Sản phẩm là server state từ DummyJSON; giỏ hàng vẫn là client state.
-        </p>
-
-        {isPending ? (
-          <ProductListSkeleton />
-        ) : isError ? (
-          <section className="mt-8 rounded-xl border border-red-200 bg-red-50 p-6 text-red-800">
-            <h2 className="font-bold">Không thể tải sản phẩm</h2>
-            <p className="mt-1 text-sm">{error.message}</p>
-            <button
-              className="mt-4 rounded-lg bg-red-700 px-4 py-2 font-semibold text-white transition hover:bg-red-800"
-              onClick={() => refetch()}
-              type="button"
-            >
-              Thử lại
-            </button>
-          </section>
-        ) : (
-          <>
-            {isFetching && (
-              <p className="mt-5 text-sm text-slate-500">Đang đồng bộ dữ liệu...</p>
-            )}
-            <ProductList
-              onViewProduct={setSelectedProductId}
-              products={filteredProducts}
-            />
-          </>
-        )}
-
-        <section className="mt-16 border-t border-slate-200 pt-10" id="login">
-          <div className="max-w-md">
-            <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-              React Hook Form + Zod
-            </p>
-            <h2 className="mt-2 text-2xl font-bold">Đăng nhập thử</h2>
-            <p className="mt-2 text-slate-600">
-              Form này được validate bằng schema, chưa gửi dữ liệu tới server.
-            </p>
-            <LoginForm />
-          </div>
-        </section>
-      </main>
-
-      {selectedProductId && (
-        <ProductDetail
-          onClose={() => setSelectedProductId(null)}
-          productId={selectedProductId}
-        />
-      )}
+    <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+      <p className="animate-pulse text-slate-500">Đang tải trang...</p>
     </div>
   );
 }
 
-function ProductListSkeleton() {
+function LazyPage({ children }: { children: React.ReactNode }) {
+  return <Suspense fallback={<PageFallback />}>{children}</Suspense>;
+}
+
+function App() {
   return (
-    <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-      {Array.from({ length: 8 }, (_, index) => (
-        <div
-          className="animate-pulse rounded-xl border border-slate-200 bg-white p-4"
-          key={index}
-        >
-          <div className="aspect-4/3 rounded-lg bg-slate-200" />
-          <div className="mt-4 h-4 w-2/5 rounded bg-slate-200" />
-          <div className="mt-3 h-5 rounded bg-slate-200" />
-          <div className="mt-2 h-4 w-4/5 rounded bg-slate-200" />
-          <div className="mt-5 h-10 rounded-lg bg-slate-200" />
-        </div>
-      ))}
-    </div>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route element={<LazyPage><HomePage /></LazyPage>} index />
+        <Route element={<LazyPage><ProductPage /></LazyPage>} path="product/:id" />
+        <Route element={<LazyPage><CartPage /></LazyPage>} path="cart" />
+        <Route element={<LazyPage><NotFoundPage /></LazyPage>} path="*" />
+      </Route>
+    </Routes>
   );
 }
 
