@@ -23,10 +23,38 @@ function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route element={<LazyPage><HomePage /></LazyPage>} index />
-        <Route element={<LazyPage><ProductPage /></LazyPage>} path="product/:id" />
-        <Route element={<LazyPage><CartPage /></LazyPage>} path="cart" />
-        <Route element={<LazyPage><NotFoundPage /></LazyPage>} path="*" />
+        <Route
+          element={
+            <LazyPage>
+              <HomePage />
+            </LazyPage>
+          }
+          index
+        />
+        <Route
+          element={
+            <LazyPage>
+              <ProductPage />
+            </LazyPage>
+          }
+          path="product/:id"
+        />
+        <Route
+          element={
+            <LazyPage>
+              <CartPage />
+            </LazyPage>
+          }
+          path="cart"
+        />
+        <Route
+          element={
+            <LazyPage>
+              <NotFoundPage />
+            </LazyPage>
+          }
+          path="*"
+        />
       </Route>
     </Routes>
   );

@@ -11,7 +11,9 @@ export interface Product {
   images: string[];
 }
 
-export interface CartItem
-  extends Pick<Product, "id" | "title" | "price" | "thumbnail"> {
+export interface CartItem extends Pick<
+  Product,
+  "id" | "title" | "price" | "thumbnail"
+> {
   quantity: number;
 }

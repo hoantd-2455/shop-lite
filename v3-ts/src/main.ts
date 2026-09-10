@@ -9,8 +9,10 @@ import type { FetchState, Product } from "./types";
 const productListElement = getRequiredElement<HTMLDivElement>("#product-list");
 const searchFormElement = getRequiredElement<HTMLFormElement>(".search-form");
 const searchInputElement = getRequiredElement<HTMLInputElement>("#search");
-const emptyStateElement = getRequiredElement<HTMLParagraphElement>("#empty-state");
-const productStatusElement = getRequiredElement<HTMLParagraphElement>("#product-status");
+const emptyStateElement =
+  getRequiredElement<HTMLParagraphElement>("#empty-state");
+const productStatusElement =
+  getRequiredElement<HTMLParagraphElement>("#product-status");
 const cartBadgeElement = getRequiredElement<HTMLSpanElement>(".cart-badge");
 
 let products: Product[] = [];
@@ -62,7 +64,8 @@ function showError(error: unknown): void {
   productListElement.innerHTML = "";
   emptyStateElement.hidden = true;
   productStatusElement.dataset.state = productState.status;
-  productStatusElement.textContent = "Không thể tải sản phẩm. Vui lòng thử lại.";
+  productStatusElement.textContent =
+    "Không thể tải sản phẩm. Vui lòng thử lại.";
 }
 
 async function initialize(): Promise<void> {

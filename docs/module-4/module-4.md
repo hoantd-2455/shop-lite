@@ -14,13 +14,13 @@ Module này tập trung vào tư duy component và hooks — phần khác biệt
 
 ## Phân loại state
 
-| Loại state | Ví dụ | Công cụ phù hợp |
-| --- | --- | --- |
-| Server state | Danh sách sản phẩm từ API | TanStack Query |
-| URL state | Từ khóa tìm kiếm, trang hiện tại | React Router URL params |
-| Client state | Giỏ hàng, theme | Context, Zustand hoặc Redux Toolkit |
-| Form state | Email, mật khẩu, lỗi validation | React Hook Form + Zod |
-| Local state | Input tạm thời, modal đang mở | `useState` |
+| Loại state   | Ví dụ                            | Công cụ phù hợp                     |
+| ------------ | -------------------------------- | ----------------------------------- |
+| Server state | Danh sách sản phẩm từ API        | TanStack Query                      |
+| URL state    | Từ khóa tìm kiếm, trang hiện tại | React Router URL params             |
+| Client state | Giỏ hàng, theme                  | Context, Zustand hoặc Redux Toolkit |
+| Form state   | Email, mật khẩu, lỗi validation  | React Hook Form + Zod               |
+| Local state  | Input tạm thời, modal đang mở    | `useState`                          |
 
 ## Kết quả mong đợi
 

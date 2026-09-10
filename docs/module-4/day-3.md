@@ -25,11 +25,11 @@ useEffect(() => {
 
 Dependency array quyết định khi effect chạy lại:
 
-| Dependency | Khi chạy |
-| --- | --- |
-| `[]` | Một lần sau mount |
-| `[value]` | Sau mount và khi `value` thay đổi |
-| Không có array | Sau mọi render; hiếm khi cần |
+| Dependency     | Khi chạy                          |
+| -------------- | --------------------------------- |
+| `[]`           | Một lần sau mount                 |
+| `[value]`      | Sau mount và khi `value` thay đổi |
+| Không có array | Sau mọi render; hiếm khi cần      |
 
 ### Fetch thủ công và custom hook
 

@@ -6,13 +6,13 @@ E-commerce được chọn vì chạm vào các kỹ năng cốt lõi của mộ
 
 ## ShopLite tiến hóa qua từng module
 
-| Module | Công nghệ | ShopLite ở giai đoạn này |
-| --- | --- | --- |
-| 1 | HTML/CSS | Trang tĩnh: danh sách sản phẩm, trang chi tiết, trang giỏ hàng; responsive, làm quen Tailwind, chưa có logic. |
-| 2 | JavaScript | Trang động: render sản phẩm từ API, tìm kiếm/lọc, thêm vào giỏ và lưu giỏ bằng `localStorage`. |
-| 3 | TypeScript | Refactor JavaScript sang TypeScript với Vite; định nghĩa type cho `Product`, `CartItem`. |
-| 4 | ReactJS | Dựng lại thành SPA: component hóa bằng Tailwind, hooks, routing; fetch API bằng TanStack Query, form validation với React Hook Form + Zod, phân loại state và giỏ hàng với Zustand/Redux Toolkit; tối ưu render. |
-| 5 | Next.js | Hoàn thiện với SSR/SSG, dynamic routes, API routes, auth bằng Auth.js và bảo vệ route, URL state, tích hợp store + TanStack Query, form validation, SEO, Core Web Vitals và deploy Vercel. |
+| Module | Công nghệ  | ShopLite ở giai đoạn này                                                                                                                                                                                         |
+| ------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1      | HTML/CSS   | Trang tĩnh: danh sách sản phẩm, trang chi tiết, trang giỏ hàng; responsive, làm quen Tailwind, chưa có logic.                                                                                                    |
+| 2      | JavaScript | Trang động: render sản phẩm từ API, tìm kiếm/lọc, thêm vào giỏ và lưu giỏ bằng `localStorage`.                                                                                                                   |
+| 3      | TypeScript | Refactor JavaScript sang TypeScript với Vite; định nghĩa type cho `Product`, `CartItem`.                                                                                                                         |
+| 4      | ReactJS    | Dựng lại thành SPA: component hóa bằng Tailwind, hooks, routing; fetch API bằng TanStack Query, form validation với React Hook Form + Zod, phân loại state và giỏ hàng với Zustand/Redux Toolkit; tối ưu render. |
+| 5      | Next.js    | Hoàn thiện với SSR/SSG, dynamic routes, API routes, auth bằng Auth.js và bảo vệ route, URL state, tích hợp store + TanStack Query, form validation, SEO, Core Web Vitals và deploy Vercel.                       |
 
 Sau 18 ngày, bạn có một sản phẩm hoàn chỉnh trên Vercel để đưa vào portfolio hoặc CV.
 
@@ -42,29 +42,29 @@ Các API miễn phí, không cần đăng ký:
 
 DummyJSON là REST API giả lập dữ liệu e-commerce. Mọi endpoint hỗ trợ phân trang qua query parameter như `?limit=&skip=`, chọn trường qua `?select=` và mô phỏng độ trễ qua `?delay=`. Các thao tác ghi (`add`, `update`, `delete`) chỉ mô phỏng: server trả kết quả nhưng không lưu thật.
 
-| Mục đích | Endpoint | Ghi chú |
-| --- | --- | --- |
-| Danh sách sản phẩm | `GET /products` | Mặc định 30 item; dùng `?limit=10&skip=20` để phân trang. |
-| Chi tiết sản phẩm | `GET /products/{id}` | Trả về object sản phẩm đầy đủ. |
-| Tìm kiếm | `GET /products/search?q=phone` | Trả về `{ products, total, skip, limit }`. |
-| Danh sách danh mục | `GET /products/categories` | Mảng object `{ slug, name, url }`. |
-| Sản phẩm theo danh mục | `GET /products/category/{slug}` | Ví dụ: `/products/category/smartphones`. |
-| Đăng nhập | `POST /auth/login` | Body `{ username, password }`; trả về token JWT. |
-| Thông tin user hiện tại | `GET /auth/me` | Gửi header `Authorization: Bearer <token>`. |
-| Giỏ hàng | `GET /carts`, `POST /carts/add` | Dùng để tham khảo; ShopLite tự quản lý giỏ phía client. |
+| Mục đích                | Endpoint                        | Ghi chú                                                   |
+| ----------------------- | ------------------------------- | --------------------------------------------------------- |
+| Danh sách sản phẩm      | `GET /products`                 | Mặc định 30 item; dùng `?limit=10&skip=20` để phân trang. |
+| Chi tiết sản phẩm       | `GET /products/{id}`            | Trả về object sản phẩm đầy đủ.                            |
+| Tìm kiếm                | `GET /products/search?q=phone`  | Trả về `{ products, total, skip, limit }`.                |
+| Danh sách danh mục      | `GET /products/categories`      | Mảng object `{ slug, name, url }`.                        |
+| Sản phẩm theo danh mục  | `GET /products/category/{slug}` | Ví dụ: `/products/category/smartphones`.                  |
+| Đăng nhập               | `POST /auth/login`              | Body `{ username, password }`; trả về token JWT.          |
+| Thông tin user hiện tại | `GET /auth/me`                  | Gửi header `Authorization: Bearer <token>`.               |
+| Giỏ hàng                | `GET /carts`, `POST /carts/add` | Dùng để tham khảo; ShopLite tự quản lý giỏ phía client.   |
 
 Cấu trúc một sản phẩm gồm các trường chính: `id`, `title`, `description`, `price`, `discountPercentage`, `rating`, `stock`, `category`, `thumbnail`, `images`. Xem thêm [Products documentation](https://dummyjson.com/docs/products) và [Auth documentation](https://dummyjson.com/docs/auth).
 
 ## Cấu trúc tài liệu
 
-| Module | Số ngày |
-| --- | ---: |
-| Markup: HTML & CSS | 3 |
-| JavaScript | 3 |
-| TypeScript | 2 |
-| ReactJS, gồm TanStack Query, RHF + Zod, Redux Toolkit | 5 |
-| Next.js, gồm tích hợp Redux Toolkit + TanStack Query | 5 |
-| **Tổng** | **18** |
+| Module                                                | Số ngày |
+| ----------------------------------------------------- | ------: |
+| Markup: HTML & CSS                                    |       3 |
+| JavaScript                                            |       3 |
+| TypeScript                                            |       2 |
+| ReactJS, gồm TanStack Query, RHF + Zod, Redux Toolkit |       5 |
+| Next.js, gồm tích hợp Redux Toolkit + TanStack Query  |       5 |
+| **Tổng**                                              |  **18** |
 
 ## Cách dùng tài liệu hiệu quả
 

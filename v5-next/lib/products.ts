@@ -17,6 +17,7 @@ type ProductsResponse = {
 
 const PRODUCTS_URL =
   "https://dummyjson.com/products?limit=12&select=id,title,description,price,rating,stock,category,thumbnail";
+const PRODUCT_URL = "https://dummyjson.com/products";
 
 function isProduct(value: unknown): value is Product {
   if (typeof value !== "object" || value === null) {
@@ -64,4 +65,27 @@ export async function getProducts(): Promise<Product[]> {
   }
 
   return data.products;
+}
+
+// Chạy ở server. `null` nghĩa là API không tìm thấy sản phẩm có id này.
+export async function getProduct(productId: number): Promise<Product | null> {
+  const response = await fetch(`${PRODUCT_URL}/${productId}`, {
+    next: { revalidate: 60 },
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Không tải được sản phẩm: HTTP ${response.status}`);
+  }
+
+  const data: unknown = await response.json();
+
+  if (!isProduct(data)) {
+    throw new Error("Dữ liệu chi tiết sản phẩm không đúng cấu trúc mong đợi.");
+  }
+
+  return data;
 }

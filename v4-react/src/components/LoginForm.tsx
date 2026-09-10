@@ -1,10 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  loginSchema,
-  type LoginFormValues,
-} from "../schemas/loginSchema";
+import { loginSchema, type LoginFormValues } from "../schemas/loginSchema";
 
 const inputClassName =
   "mt-1 w-full rounded-lg border px-3 py-2.5 outline-none transition focus:ring-3";
@@ -71,9 +68,7 @@ export function LoginForm() {
           type="password"
         />
         {errors.password?.message && (
-          <p className="mt-1 text-sm text-red-600">
-            {errors.password.message}
-          </p>
+          <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
         )}
       </div>
 

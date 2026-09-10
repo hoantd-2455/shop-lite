@@ -29,11 +29,11 @@ Trình duyệt tự tính số cột vừa với độ rộng hiện tại. Dùn
 
 ### Khi nào dùng Flexbox, khi nào dùng Grid?
 
-| Nhu cầu | Công cụ |
-| --- | --- |
-| Layout một chiều theo hàng hoặc cột | Flexbox |
-| Lưới đều theo hàng và cột | Grid |
-| Một product card nằm trong lưới | Grid bên ngoài, Flexbox bên trong |
+| Nhu cầu                             | Công cụ                           |
+| ----------------------------------- | --------------------------------- |
+| Layout một chiều theo hàng hoặc cột | Flexbox                           |
+| Lưới đều theo hàng và cột           | Grid                              |
+| Một product card nằm trong lưới     | Grid bên ngoài, Flexbox bên trong |
 
 Trong thực tế, hai công cụ thường được lồng vào nhau: Grid cho bố cục lớn, Flexbox cho từng ô bên trong.
 

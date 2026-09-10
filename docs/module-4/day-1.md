@@ -47,9 +47,9 @@ function ProductCard({ product }: ProductCardProps) {
 ### Render list, `key` và điều kiện
 
 ```tsx
-{products.map((product) => (
-  <ProductCard key={product.id} product={product} />
-))}
+{
+  products.map((product) => <ProductCard key={product.id} product={product} />);
+}
 ```
 
 `key` phải là định danh ổn định như `product.id`. Không dùng index nếu danh sách có thể thêm, xóa hoặc sắp xếp lại; React có thể gắn nhầm state/UI vào item khác.
@@ -57,7 +57,9 @@ function ProductCard({ product }: ProductCardProps) {
 Conditional rendering dùng `&&` hoặc ternary:
 
 ```tsx
-{isOutOfStock ? <span>Hết hàng</span> : <span>Còn hàng</span>}
+{
+  isOutOfStock ? <span>Hết hàng</span> : <span>Còn hàng</span>;
+}
 ```
 
 ### Tailwind trong React

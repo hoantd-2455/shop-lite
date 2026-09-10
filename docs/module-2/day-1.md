@@ -14,14 +14,14 @@
 
 Đây là phần cốt lõi của JavaScript hiện đại. Thay vì dùng vòng `for`, ưu tiên các hàm trả về mảng mới theo hướng bất biến:
 
-| Method | Mục đích |
-| --- | --- |
-| `map(fn)` | Biến đổi từng phần tử, trả về mảng cùng độ dài. |
-| `filter(fn)` | Giữ các phần tử thỏa điều kiện. |
-| `reduce(fn, initialValue)` | Gộp mảng thành một giá trị như tổng hoặc object. |
-| `find` | Tìm phần tử đầu tiên thỏa điều kiện. |
-| `some` / `every` | Kiểm tra có một / tất cả phần tử thỏa điều kiện. |
-| `sort` | Sắp xếp mảng; cần clone trước nếu không muốn sửa mảng gốc. |
+| Method                     | Mục đích                                                   |
+| -------------------------- | ---------------------------------------------------------- |
+| `map(fn)`                  | Biến đổi từng phần tử, trả về mảng cùng độ dài.            |
+| `filter(fn)`               | Giữ các phần tử thỏa điều kiện.                            |
+| `reduce(fn, initialValue)` | Gộp mảng thành một giá trị như tổng hoặc object.           |
+| `find`                     | Tìm phần tử đầu tiên thỏa điều kiện.                       |
+| `some` / `every`           | Kiểm tra có một / tất cả phần tử thỏa điều kiện.           |
+| `sort`                     | Sắp xếp mảng; cần clone trước nếu không muốn sửa mảng gốc. |
 
 Các method có thể chain:
 

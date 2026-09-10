@@ -9,13 +9,13 @@
 
 ## Phân loại state
 
-| Loại state | Ví dụ | Công cụ phù hợp |
-| --- | --- | --- |
-| Server state | Sản phẩm, user, đơn hàng từ API | TanStack Query, RTK Query, SWR |
-| URL state | Filter, trang, tab, từ khóa search | URL params, search params |
-| Client/UI state | Giỏ hàng, theme, modal, bước checkout | Zustand, Redux Toolkit, Context |
-| Form state | Giá trị và lỗi form | React Hook Form + Zod |
-| Local state | Input hoặc drawer chỉ một component dùng | `useState`, `useReducer` |
+| Loại state      | Ví dụ                                    | Công cụ phù hợp                 |
+| --------------- | ---------------------------------------- | ------------------------------- |
+| Server state    | Sản phẩm, user, đơn hàng từ API          | TanStack Query, RTK Query, SWR  |
+| URL state       | Filter, trang, tab, từ khóa search       | URL params, search params       |
+| Client/UI state | Giỏ hàng, theme, modal, bước checkout    | Zustand, Redux Toolkit, Context |
+| Form state      | Giá trị và lỗi form                      | React Hook Form + Zod           |
+| Local state     | Input hoặc drawer chỉ một component dùng | `useState`, `useReducer`        |
 
 ## Cây quyết định
 

@@ -13,7 +13,9 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-export const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({
+  product,
+}: ProductCardProps) {
   const isOutOfStock = product.stock === 0;
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -26,7 +28,9 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
       />
 
       <div className="mt-4 flex items-start justify-between gap-3">
-        <p className="text-sm font-semibold text-blue-600">{product.category}</p>
+        <p className="text-sm font-semibold text-blue-600">
+          {product.category}
+        </p>
         {isOutOfStock ? (
           <span className="rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">
             Hết hàng
@@ -42,7 +46,9 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
       <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">
         {product.description}
       </p>
-      <p className="mt-4 font-bold text-blue-600">{formatPrice(product.price)}</p>
+      <p className="mt-4 font-bold text-blue-600">
+        {formatPrice(product.price)}
+      </p>
       <p className="mt-1 text-sm text-slate-500">⭐ {product.rating} / 5</p>
 
       <div className="mt-4 grid gap-2">

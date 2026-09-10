@@ -4,7 +4,7 @@
 
 ### SPA và React Router
 
-SPA (*Single Page Application*) chỉ tải một trang HTML; JavaScript thay đổi nội dung khi điều hướng thay vì tải lại toàn bộ trang. Router đảm nhiệm việc ánh xạ URL tới component tương ứng.
+SPA (_Single Page Application_) chỉ tải một trang HTML; JavaScript thay đổi nội dung khi điều hướng thay vì tải lại toàn bộ trang. Router đảm nhiệm việc ánh xạ URL tới component tương ứng.
 
 - Bọc ứng dụng bằng `<BrowserRouter>`.
 - Khai báo `<Routes>` chứa các `<Route path="..." element={...} />`.

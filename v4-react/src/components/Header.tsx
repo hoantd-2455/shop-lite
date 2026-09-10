@@ -32,11 +32,36 @@ export function Header() {
           ShopLite
         </Link>
 
-        <nav aria-label="Điều hướng chính" className="ml-auto flex items-center gap-4">
-          <NavLink className={({ isActive }) => isActive ? "font-semibold text-blue-600" : theme === "dark" ? "font-medium text-slate-100" : "font-medium text-slate-700"} to="/">Sản phẩm</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-semibold text-blue-600" : theme === "dark" ? "font-medium text-slate-100" : "font-medium text-slate-700"} to="/cart">
-            Giỏ hàng {cartTotal > 0 && `· ${formatPrice(cartTotal)}`} {" "}
-            <span className="inline-grid size-6 place-items-center rounded-full bg-red-500 text-sm font-bold text-white">{cartCount}</span>
+        <nav
+          aria-label="Điều hướng chính"
+          className="ml-auto flex items-center gap-4"
+        >
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-blue-600"
+                : theme === "dark"
+                  ? "font-medium text-slate-100"
+                  : "font-medium text-slate-700"
+            }
+            to="/"
+          >
+            Sản phẩm
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? "font-semibold text-blue-600"
+                : theme === "dark"
+                  ? "font-medium text-slate-100"
+                  : "font-medium text-slate-700"
+            }
+            to="/cart"
+          >
+            Giỏ hàng {cartTotal > 0 && `· ${formatPrice(cartTotal)}`}{" "}
+            <span className="inline-grid size-6 place-items-center rounded-full bg-red-500 text-sm font-bold text-white">
+              {cartCount}
+            </span>
           </NavLink>
         </nav>
         <button

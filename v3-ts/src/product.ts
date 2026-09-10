@@ -6,7 +6,8 @@ import { getRequiredElement } from "./dom";
 import type { Product } from "./types";
 
 const productDetailElement = getRequiredElement<HTMLElement>("#product-detail");
-const productStatusElement = getRequiredElement<HTMLParagraphElement>("#product-status");
+const productStatusElement =
+  getRequiredElement<HTMLParagraphElement>("#product-status");
 const cartBadgeElement = getRequiredElement<HTMLSpanElement>(".cart-badge");
 
 let currentProduct: Product | null = null;
@@ -40,7 +41,8 @@ function showError(message: string): void {
 }
 
 function renderProduct(product: Product): void {
-  const { id, title, price, thumbnail, category, rating, description, stock } = product;
+  const { id, title, price, thumbnail, category, rating, description, stock } =
+    product;
 
   productDetailElement.innerHTML = `
     <img class="product-detail-image" src="${thumbnail}" alt="${title}" />
@@ -64,7 +66,9 @@ function renderProduct(product: Product): void {
 }
 
 async function initialize(): Promise<void> {
-  const productId = Number(new URLSearchParams(window.location.search).get("id"));
+  const productId = Number(
+    new URLSearchParams(window.location.search).get("id"),
+  );
 
   if (!Number.isInteger(productId) || productId <= 0) {
     showError("Không tìm thấy mã sản phẩm hợp lệ.");
@@ -85,7 +89,11 @@ async function initialize(): Promise<void> {
 productDetailElement.addEventListener("click", (event) => {
   const target = event.target;
 
-  if (!(target instanceof Element) || !target.closest(".add-to-cart-button") || !currentProduct) {
+  if (
+    !(target instanceof Element) ||
+    !target.closest(".add-to-cart-button") ||
+    !currentProduct
+  ) {
     return;
   }
 

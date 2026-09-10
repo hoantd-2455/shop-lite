@@ -6,7 +6,14 @@ import { useProducts } from "../hooks/useProducts";
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: products = [], error, isError, isFetching, isPending, refetch } = useProducts();
+  const {
+    data: products = [],
+    error,
+    isError,
+    isFetching,
+    isPending,
+    refetch,
+  } = useProducts();
 
   const filteredProducts = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -47,7 +54,9 @@ export default function HomePage() {
       ) : (
         <>
           {isFetching && (
-            <p className="mt-5 text-sm text-slate-500">Đang đồng bộ dữ liệu...</p>
+            <p className="mt-5 text-sm text-slate-500">
+              Đang đồng bộ dữ liệu...
+            </p>
           )}
           <ProductList products={filteredProducts} />
         </>

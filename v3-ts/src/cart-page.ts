@@ -65,9 +65,10 @@ function renderCart(): void {
   const cart = loadCart();
 
   renderCartBadge(cart);
-  cartItemsElement.innerHTML = cart.length === 0
-    ? '<p class="empty-cart">Giỏ hàng đang trống. <a href="index.html">Tiếp tục mua sắm</a>.</p>'
-    : cart.map(cartItemHTML).join("");
+  cartItemsElement.innerHTML =
+    cart.length === 0
+      ? '<p class="empty-cart">Giỏ hàng đang trống. <a href="index.html">Tiếp tục mua sắm</a>.</p>'
+      : cart.map(cartItemHTML).join("");
   orderSummaryElement.innerHTML = orderSummaryHTML(cart);
 }
 
@@ -78,8 +79,12 @@ cartItemsElement.addEventListener("click", (event) => {
     return;
   }
 
-  const removeButton = target.closest<HTMLButtonElement>('[data-action="remove"]');
-  const productId = Number(removeButton?.closest<HTMLElement>("[data-id]")?.dataset.id);
+  const removeButton = target.closest<HTMLButtonElement>(
+    '[data-action="remove"]',
+  );
+  const productId = Number(
+    removeButton?.closest<HTMLElement>("[data-id]")?.dataset.id,
+  );
 
   if (!removeButton || !Number.isInteger(productId)) {
     return;
@@ -92,11 +97,16 @@ cartItemsElement.addEventListener("click", (event) => {
 cartItemsElement.addEventListener("change", (event) => {
   const target = event.target;
 
-  if (!(target instanceof HTMLInputElement) || !target.matches(".quantity-input")) {
+  if (
+    !(target instanceof HTMLInputElement) ||
+    !target.matches(".quantity-input")
+  ) {
     return;
   }
 
-  const productId = Number(target.closest<HTMLElement>("[data-id]")?.dataset.id);
+  const productId = Number(
+    target.closest<HTMLElement>("[data-id]")?.dataset.id,
+  );
 
   if (!Number.isInteger(productId)) {
     return;
