@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "ShopLite | Next.js",
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body className="flex min-h-screen flex-col bg-slate-50 text-slate-800 antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

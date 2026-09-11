@@ -1,3 +1,4 @@
+import { AuthControls } from "@/components/AuthControls";
 import { CartLink } from "@/components/CartLink";
 import { SearchBar } from "@/components/SearchBar";
 import Link from "next/link";
@@ -36,6 +37,7 @@ export function Header() {
           <SearchBar />
         </Suspense>
         <CartLink />
+        <AuthControls />
       </div>
     </header>
   );

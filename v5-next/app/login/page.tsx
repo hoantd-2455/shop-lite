@@ -1,35 +1,40 @@
-import { DemoLoginButton } from "@/components/DemoLoginButton";
+import { LoginForm } from "@/components/LoginForm";
 
-function getSafeRedirect(next: string | undefined) {
-  if (next?.startsWith("/") && !next.startsWith("//")) {
-    return next;
+function getSafeCallbackUrl(callbackUrl: string | undefined) {
+  if (!callbackUrl) {
+    return "/";
   }
 
-  return "/";
+  try {
+    // Chỉ lấy path nội bộ. Dù callbackUrl bị thay thành URL ngoài, ta không redirect ra ngoài.
+    const url = new URL(callbackUrl, "http://shoplite.local");
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return "/";
+  }
 }
 
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ callbackUrl?: string }>;
 }) {
-  const { next } = await searchParams;
-  const redirectTo = getSafeRedirect(next);
+  const { callbackUrl } = await searchParams;
+  const safeCallbackUrl = getSafeCallbackUrl(callbackUrl);
 
   return (
     <section className="mx-auto w-full max-w-xl px-4 py-10 sm:px-6 lg:py-14">
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-600">
-          Day 3 demo
+          Auth.js · Credentials
         </p>
         <h1 className="mt-2 text-3xl font-bold text-slate-900">Đăng nhập</h1>
         <p className="mt-4 leading-7 text-slate-600">
-          Nút này chỉ ghi cookie giả trong trình duyệt để kiểm tra redirect của
-          route bảo vệ. Nó không thay thế xác thực thật.
+          Dùng tài khoản thử của DummyJSON: <strong>emilys</strong> /{" "}
+          <strong>emilyspass</strong>. Sau khi xác thực, Auth.js tạo session JWT
+          trong cookie bảo mật.
         </p>
-        <div className="mt-6">
-          <DemoLoginButton redirectTo={redirectTo} />
-        </div>
+        <LoginForm callbackUrl={safeCallbackUrl} />
       </div>
     </section>
   );

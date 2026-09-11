@@ -8,19 +8,39 @@ export function SearchBar() {
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get("q") ?? "";
 
-  return <SearchForm initialQuery={urlQuery} key={urlQuery} />;
+  return (
+    <SearchForm
+      initialQuery={urlQuery}
+      initialSearchParams={searchParams.toString()}
+      key={searchParams.toString()}
+    />
+  );
 }
 
-function SearchForm({ initialQuery }: { initialQuery: string }) {
+function SearchForm({
+  initialQuery,
+  initialSearchParams,
+}: {
+  initialQuery: string;
+  initialSearchParams: string;
+}) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalizedQuery = query.trim();
-    const target = normalizedQuery
-      ? `/?q=${encodeURIComponent(normalizedQuery)}`
-      : "/";
+    const params = new URLSearchParams(initialSearchParams);
+
+    if (normalizedQuery) {
+      params.set("q", normalizedQuery);
+    } else {
+      params.delete("q");
+    }
+
+    params.delete("page");
+    const serializedParams = params.toString();
+    const target = serializedParams ? `/?${serializedParams}` : "/";
 
     router.push(target);
   }

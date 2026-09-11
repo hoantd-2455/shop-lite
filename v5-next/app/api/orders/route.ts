@@ -1,24 +1,5 @@
-interface OrderItem {
-  productId: number;
-  quantity: number;
-}
-
-function isValidOrderItem(value: unknown): value is OrderItem {
-  if (typeof value !== "object" || value === null) {
-    return false;
-  }
-
-  const item = value as Record<string, unknown>;
-
-  return (
-    typeof item.productId === "number" &&
-    Number.isSafeInteger(item.productId) &&
-    item.productId > 0 &&
-    typeof item.quantity === "number" &&
-    Number.isSafeInteger(item.quantity) &&
-    item.quantity > 0
-  );
-}
+import { auth } from "@/auth";
+import { createOrderSchema } from "@/lib/schemas";
 
 // Route Handler: endpoint GET độc lập với UI page.tsx.
 export function GET() {
@@ -29,6 +10,13 @@ export function GET() {
 
 // Route Handler: nhận JSON từ client và trả về mã đơn hàng mock.
 export async function POST(request: Request) {
+  // Route Handler cũng cần tự xác thực. Proxy không bảo vệ API này.
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    return Response.json({ message: "Bạn cần đăng nhập." }, { status: 401 });
+  }
+
   let body: unknown;
 
   try {
@@ -40,18 +28,14 @@ export async function POST(request: Request) {
     );
   }
 
-  const items =
-    typeof body === "object" && body !== null && "items" in body
-      ? body.items
-      : undefined;
+  const parsedOrder = createOrderSchema.safeParse(body);
 
-  if (
-    !Array.isArray(items) ||
-    items.length === 0 ||
-    !items.every(isValidOrderItem)
-  ) {
+  if (!parsedOrder.success) {
     return Response.json(
-      { message: "items phải là mảng gồm productId và quantity dương." },
+      {
+        message: "Dữ liệu đơn hàng chưa hợp lệ.",
+        errors: parsedOrder.error.flatten().fieldErrors,
+      },
       { status: 400 },
     );
   }
@@ -59,14 +43,14 @@ export async function POST(request: Request) {
   const orderCode = `SL-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
 
   console.info(
-    `[api] Tạo đơn hàng mock ${orderCode} với ${items.length} dòng.`,
+    `[api] Tạo đơn hàng mock ${orderCode} cho user ${session.user.id} với ${parsedOrder.data.items.length} dòng.`,
   );
 
   return Response.json(
     {
       orderCode,
       status: "received",
-      itemCount: items.length,
+      itemCount: parsedOrder.data.items.length,
       message: "Đơn hàng mô phỏng đã được ghi nhận.",
     },
     { status: 201 },
